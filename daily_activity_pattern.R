@@ -7,7 +7,7 @@ setAs("character", "myDate", function(from) as.Date(from, format="%Y-%m-%d"))
 
 # Generate a line graph that shows the average daily activity over each 
 # five-minute interval.
-generate_daily_activity_data <- function()
+generateDailyActivityData <- function()
 {
     data <- read.csv("activity.csv", 
                      header=TRUE, 
