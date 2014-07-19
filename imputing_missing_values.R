@@ -20,7 +20,7 @@ generateImputedStepsPerDay <- function()
     stepsByDay <- aggregate(data$steps, by=data[c("date")], FUN=sum, na.rm=TRUE)
     
     # Remove days with no observations
-    stepsByDay <- stepsByDay[stepsByDay[,2] > 0, ]
+    #stepsByDay <- stepsByDay[stepsByDay[,2] > 0, ]
     
     hist(stepsByDay[, 2], 
          breaks=20,
