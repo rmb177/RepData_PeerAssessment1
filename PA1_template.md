@@ -36,8 +36,8 @@ sessionInfo()
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] digest_0.6.4     evaluate_0.5.5   formatR_0.10     htmltools_0.2.4 
-##  [5] markdown_0.7     memoise_0.2.1    mime_0.1.1       plyr_1.8.1      
-##  [9] Rcpp_0.11.1      rmarkdown_0.2.46 stringr_0.6.2    tools_3.0.3
+##  [5] memoise_0.2.1    plyr_1.8.1       Rcpp_0.11.1      rmarkdown_0.2.46
+##  [9] stringr_0.6.2    tools_3.0.3
 ```
 
 
@@ -192,12 +192,12 @@ The function takes in a row of the original dataset and a data matrix of the ave
 This function is then used to generate the new dataset and calculate the new total steps per day values:
 
 ```r
-imputed_data <- data.frame(apply(activityData, 1, lookupAverageStepsForInterval, stepsByInterval), 
-                           activityData[, 2], 
-                           activityData[, 3])
-colnames(imputed_data) <- colnames(activityData)
+imputedData <- data.frame(apply(activityData, 1, lookupAverageStepsForInterval, stepsByInterval), 
+                          activityData[, 2], 
+                          activityData[, 3])
+colnames(imputedData) <- colnames(activityData)
 
-imputedStepsByDay <- aggregate(imputed_data$steps, by=imputed_data[c("date")], FUN=sum, na.rm=TRUE)
+imputedStepsByDay <- aggregate(imputedData$steps, by=imputedData[c("date")], FUN=sum, na.rm=TRUE)
 ```
 
 The histogram was then generated with the following code:

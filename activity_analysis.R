@@ -66,12 +66,12 @@ lookupAverageStepsForInterval <- function(rowData, lookupTable)
     }
 }
 
-imputed_data <- data.frame(apply(activityData, 1, lookupAverageStepsForInterval, stepsByInterval), 
-                           activityData[, 2], 
-                           activityData[, 3])
-colnames(imputed_data) <- colnames(activityData)
+imputedData <- data.frame(apply(activityData, 1, lookupAverageStepsForInterval, stepsByInterval), 
+                          activityData[, 2], 
+                          activityData[, 3])
+colnames(imputedData) <- colnames(activityData)
 
-imputedStepsByDay <- aggregate(imputed_data$steps, by=imputed_data[c("date")], FUN=sum, na.rm=TRUE)
+imputedStepsByDay <- aggregate(imputedData$steps, by=imputedData[c("date")], FUN=sum, na.rm=TRUE)
 
 hist(imputedStepsByDay[, 2], 
      breaks=20,
@@ -85,10 +85,10 @@ print(paste("Median number of steps taken per day = ", round(median(imputedSteps
 
 ################ Part 4: Difference in activity patterns between weekdays and weekends
 weekend = c("Saturday", "Sunday")
-data[, "time.of.week"] <- 
- sapply(data[, 2], function(x) if (is.element(weekdays(x), weekend)) as.factor('weekend') else as.factor('weekday'))
-weekdaysData <- data[data$time.of.week == "weekday", ]
-weekendsData <- data[data$time.of.week == "weekend", ]
+activityData[, "time.of.week"] <- 
+ sapply(activityData[, 2], function(x) if (is.element(weekdays(x), weekend)) as.factor('weekend') else as.factor('weekday'))
+weekdaysData <- activityData[activityData$time.of.week == "weekday", ]
+weekendsData <- activityData[activityData$time.of.week == "weekend", ]
 
 par(mfrow = c(2, 1))
 par(mar = c(3, 3, 3, 3))

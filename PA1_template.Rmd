@@ -137,12 +137,12 @@ The function takes in a row of the original dataset and a data matrix of the ave
 
 This function is then used to generate the new dataset and calculate the new total steps per day values:
 ``` {r imputedData}
-imputed_data <- data.frame(apply(activityData, 1, lookupAverageStepsForInterval, stepsByInterval), 
-                           activityData[, 2], 
-                           activityData[, 3])
-colnames(imputed_data) <- colnames(activityData)
+imputedData <- data.frame(apply(activityData, 1, lookupAverageStepsForInterval, stepsByInterval), 
+                          activityData[, 2], 
+                          activityData[, 3])
+colnames(imputedData) <- colnames(activityData)
 
-imputedStepsByDay <- aggregate(imputed_data$steps, by=imputed_data[c("date")], FUN=sum, na.rm=TRUE)
+imputedStepsByDay <- aggregate(imputedData$steps, by=imputedData[c("date")], FUN=sum, na.rm=TRUE)
 ```
 
 The histogram was then generated with the following code:

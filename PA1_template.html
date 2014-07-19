@@ -229,8 +229,8 @@ hr {
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] digest_0.6.4     evaluate_0.5.5   formatR_0.10     htmltools_0.2.4 
-##  [5] markdown_0.7     memoise_0.2.1    mime_0.1.1       plyr_1.8.1      
-##  [9] Rcpp_0.11.1      rmarkdown_0.2.46 stringr_0.6.2    tools_3.0.3
+##  [5] memoise_0.2.1    plyr_1.8.1       Rcpp_0.11.1      rmarkdown_0.2.46
+##  [9] stringr_0.6.2    tools_3.0.3
 </code></pre>
 
 <h2>Loading and preprocessing the data</h2>
@@ -372,12 +372,12 @@ print(paste(&quot;The interval with the maximum average number of steps taken is
 
 <p>This function is then used to generate the new dataset and calculate the new total steps per day values:</p>
 
-<pre><code class="r">imputed_data &lt;- data.frame(apply(activityData, 1, lookupAverageStepsForInterval, stepsByInterval), 
-                           activityData[, 2], 
-                           activityData[, 3])
-colnames(imputed_data) &lt;- colnames(activityData)
+<pre><code class="r">imputedData &lt;- data.frame(apply(activityData, 1, lookupAverageStepsForInterval, stepsByInterval), 
+                          activityData[, 2], 
+                          activityData[, 3])
+colnames(imputedData) &lt;- colnames(activityData)
 
-imputedStepsByDay &lt;- aggregate(imputed_data$steps, by=imputed_data[c(&quot;date&quot;)], FUN=sum, na.rm=TRUE)
+imputedStepsByDay &lt;- aggregate(imputedData$steps, by=imputedData[c(&quot;date&quot;)], FUN=sum, na.rm=TRUE)
 </code></pre>
 
 <p>The histogram was then generated with the following code:</p>

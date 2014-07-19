@@ -2,3 +2,5 @@
 activity.csv
 doc/.DS_Store
 figure/.DS_Store
+.RData
+.Rhistory
