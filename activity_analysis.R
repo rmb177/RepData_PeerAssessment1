@@ -1,6 +1,4 @@
-# Script to perform the data anaylsis on the 
-# activity data
-
+# Script to perform data anaylsis on the activity data
 
 # Set up date processing
 library("lubridate")
@@ -17,7 +15,7 @@ activityData <- read.csv("activity.csv",
 # Sum up the total number of steps for each individual day
 stepsByDay <- aggregate(activityData$steps, by=activityData[c("date")], FUN=sum, na.rm=TRUE)
 
-# Sum up the total number of steps for each time interval
+# Average the total number of steps for each time interval
 stepsByInterval <- aggregate(activityData$steps, by=activityData[c("interval")], FUN=mean, na.rm=TRUE)
 
 
@@ -83,3 +81,41 @@ hist(imputedStepsByDay[, 2],
 
 print(paste("Mean number of steps taken per day = ", round(mean(imputedStepsByDay[, 2]), 2)))
 print(paste("Median number of steps taken per day = ", round(median(imputedStepsByDay[, 2]), 2)))
+
+
+################ Part 4: Difference in activity patterns between weekdays and weekends
+weekend = c("Saturday", "Sunday")
+data[, "time.of.week"] <- 
+ sapply(data[, 2], function(x) if (is.element(weekdays(x), weekend)) as.factor('weekend') else as.factor('weekday'))
+weekdaysData <- data[data$time.of.week == "weekday", ]
+weekendsData <- data[data$time.of.week == "weekend", ]
+
+par(mfrow = c(2, 1))
+par(mar = c(3, 3, 3, 3))
+
+stepsByIntervalWeekends <- aggregate(weekendsData$steps, by=weekendsData[c("interval")], FUN=mean, na.rm=TRUE)
+plot(stepsByIntervalWeekends[, 1], 
+     stepsByIntervalWeekends[, 2], 
+     type="l",
+     main="Mean Step Count by Interval (Weekends)",
+     xlab="",
+     ylab="",
+     col="#498dff",
+     cex.main=0.75,
+     cex.axis=0.75,
+     ylim=c(0, 250))
+
+stepsByIntervalWeekdays <- aggregate(weekdaysData$steps, by=weekdaysData[c("interval")], FUN=mean, na.rm=TRUE)
+plot(stepsByIntervalWeekdays[, 1], 
+     stepsByIntervalWeekdays[, 2],
+     type="l",
+     main="Mean Step Count by Interval (Weekdays)",
+     xlab="",
+     ylab="",
+     col="#498dff",
+     cex.main=0.75,
+     cex.axis=0.75,
+     ylim=c(0, 250))
+
+mtext("Interval", side=1, padj=-2, outer=TRUE, cex=0.75)
+mtext("Mean Step Count", side=2, padj=2, outer=TRUE, cex=0.75)
